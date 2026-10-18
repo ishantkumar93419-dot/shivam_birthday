@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Shivam | 22 October</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+        body {
+            background: #030712;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            perspective: 1000px;
+            position: relative;
+            color: #ffffff;
+        }
+
+        /* Background Animated Floating Elements */
+        .bg-animations {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .floating-emoji {
+            position: absolute;
+            bottom: -50px;
+            font-size: 2rem;
+            animation: flyUp 6s infinite linear;
+            opacity: 0.7;
+        }
+        @keyframes flyUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .glow-sphere {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #ff0055, #7928ca, #38bdf8);
+            filter: blur(140px);
+            border-radius: 50%;
+            z-index: 2;
+            animation: pulseGlow 6s infinite alternate ease-in-out;
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(0.9); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        /* 3D Card Styling */
+        .card {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px 30px;
+            border-radius: 35px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
+        }
+        .badge {
+            background: linear-gradient(135deg, #ff0055, #ff5e62);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4);
+        }
+        .gif-box {
+            width: 100%;
+            height: 170px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .gif-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        .btn {
+            background: linear-gradient(135deg, #38bdf8, #2563eb);
+            color: white;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.6);
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 55px;
+        }
+        #yes-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+        #no-btn {
+            background: linear-gradient(135deg, #ef4444, #991b1b);
+            position: absolute;
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+        .hidden {
+            display: none;
+        }
+        .slide-counter {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 15px;
+        }
+        .music-banner {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(17, 24, 39, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #38bdf8;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body onmousemove="tiltCard(event)">
+
+    <!-- Background Music Audio (Soft, Smooth & Pleasant Lofi/Chill Beat) -->
+    <audio id="bg-music" loop>
+        <source src="https://commondatastorage.googleapis.com/codeskulptor-assets/week7-button.ogg" type="audio/ogg">
+    </audio>
+
+    <div class="music-banner" onclick="toggleMusic()">🎧 Tap for Chill Vibe</div>
+
+    <!-- Background Floating Emojis -->
+    <div class="bg-animations">
+        <div class="floating-emoji" style="left: 10%; animation-delay: 0s;">🎉</div>
+        <div class="floating-emoji" style="left: 30%; animation-delay: 2s;">🎂</div>
+        <div class="floating-emoji" style="left: 50%; animation-delay: 1s;">🔥</div>
+        <div class="floating-emoji" style="left: 70%; animation-delay: 3s;">🚀</div>
+        <div class="floating-emoji" style="left: 90%; animation-delay: 1.5s;">🍾</div>
+    </div>
+
+    <div class="glow-sphere"></div>
+
+    <div class="card" id="card-container">
+        
+        <!-- SLIDE 1 -->
+        <div id="slide-1">
+            <div class="badge">🚨 Breaking News 🚨</div>
+            <div class="gif-box">
+                <img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Alert">
+            </div>
+            <h1>Arey Shivam Bhai... 👀</h1>
+            <p>Ruk ja bhai! Ek bohot hi bada aur khatarnak raaz khulne wala hai tere baare me! 🤫🔥</p>
+            <button class="btn" onclick="goToSlide(2)">Aage Badho ➔</button>
+            <div class="slide-counter">Slide 1 of 9</div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div id="slide-2" class="hidden">
+            <div class="badge">📅 22 October Special</div>
+            <div class="gif-box">
+                <img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif" alt="Cat Party">
+            </div>
+            <h1>Aaj Din Hai Bawaal! 🥳</h1>
+            <p>Kyunki aaj ke din hi dharti par aaye the hamare group ke sabse bade legend! ⚡😎</p>
+            <button class="btn" onclick="goToSlide(3)">Sahi me? ➔</button>
+            <div class="slide-counter">Slide 2 of 9</div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div id="slide-3" class="hidden">
+            <div class="badge">🕵️‍♂️ Secret Investigation</div>
+            <div class="gif-box">
+                <img src="https://media.giphy.com/media/3og0IPxMM0erATueVW/giphy.gif" alt="Thinking">
+            </div>
+            <h1>Ek Sawaal Hai... 🤔</h1>
+            <p>Kya isko duniya ka sabse aalu-bhaaji khane wala aur handsome dost maana jaye? 🤭</p>
+            <button class="btn" onclick="goToSlide(4)">100% Maante Hain ➔</button>
+            <div class="slide-counter">Slide 3 of 9</div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div id="slide-4" class="hidden">
+            <div class="badge">🎁 Gift Department</div>
+            <div class="gif-box">
+                <img src="https://media.giphy.com/media/xT5LMFZDsj0AKUDYTS/giphy.gif" alt="Gift">
+            </div>
+            <h1>Gift Ki Umeed? 📦</h1>
+            <p>Bhai gift ki mat soch, ye website dekh liya wahi tere liye 7 crore ka inaam hai! 😜😂</p>
+            <button class="btn" onclick="goToSlide(5)">Ye Bhi Sahi Hai ➔</button>
+            <div class="slide-counter">Slide 4 of 9</div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div id="slide-5" class="hidden">
+            <div class="badge">💸 Rich Lifestyle</div>
+            <div class="gif-box">
+                <img src="https://media.giphy.com/media/Lp71UXHRCXNbOV5Qtl/giphy.gif" alt="Money">
+            </div>
+            <h1>Bade Log! 🤑</h1>
+            <p>Suna hai aaj party me Shivam bhai sabko bombai style treat dene wale hain! True? 🍽️</p>
+            <button class="btn" onclick="goToSlide(6)">Ekdam True! ➔</button>
+            <div class="slide-counter">Slide 5 of 9</div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div id="slide-6" class="hidden">
+            <div class="badge">💃 Dance Floor</div>
+            <div class="gif-box">
+                <img src="https://media.giphy.com/media/26u6dTP6p4y0iyBIQ/giphy.gif" alt="Dance">
+            </div>
+            <h1>Nach lo Bhai Log! 🕺</h1>
+            <p>DJ wale babu mera gana baja do, kyunki aaj 22 October hai! 🎶🔥</p>
+            <button class="btn" onclick="goToSlide(7)">Bas Aane Wala Hai ➔</button>
+            <div class="slide-counter">Slide 6 of 9</div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div id="slide-7" class="hidden">
+            <div class="badge">😎 Attitude Level</div>
+            <div class="gif-box">
+                <img src="https://media.giphy.com/media/cfuL5gqFDreXxkWQ4o/giphy.gif" alt="Cool">
+            </div>
+            <h1>Swag Hi Alag Hai... 🔥</h1>
+            <p>Bhai ka style dekh ke pure mohalle ki public fida hai! True legend! 💯</p>
+            <button class="btn" onclick="goToSlide(8)">Final Test ➔</button>
+            <div class="slide-counter">Slide 7 of 9</div>
+        </div>
+
+        <!-- SLIDE 8 (YES/NO TRAP) -->
+        <div id="slide-8" class="hidden">
+            <div class="badge">⚠️ Final Agnipariksha</div>
+            <div class="gif-box">
+                <img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiOkM/giphy.gif" alt="Trap">
+            </div>
+            <h1>Sach Bata... 🤭</h1>
+            <p>Party dega na pakki? Ya fir 'No' button dabane ka shauk hai? 😂</p>
+            <div class="btn-group">
+                <button class="btn" id="yes-btn" onclick="goToSlide(9)">Pakki Party! 🍻</button>
+                <button class="btn" id="no-btn" onmouseover="moveButton()" onclick="moveButton()">Nahi 😒</button>
+            </div>
+            <div class="slide-counter">Slide 8 of 9</div>
+        </div>
+
+        <!-- SLIDE 9 (GRAND FINALE) -->
+        <div id="slide-9" class="hidden">
+            <div class="badge">🚀 22 October Grand Finale</div>
+            <div class="gif-box">
+                <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" alt="Fireworks">
+            </div>
+            <h1 style="color: #10b981;">Happy Birthday Shivam! 🥂🔥</h1>
+            <p style="color: #f1f5f9;">
+                Bhai, dua hai ki zindagi me tujhe wo sab mile jo tu chahta hai. Hamesha haste reh aur aag lagata reh! Have an epic birthday! 🎂🎉🥳
+            </p>
+            <div class="slide-counter">The Ultimate Masterpiece 💖</div>
+        </div>
+
+    </div>
+
+    <script>
+        let musicPlaying = false;
+
+        function playMusic() {
+            const music = document.getElementById('bg-music');
+            const banner = document.querySelector('.music-banner');
+            music.play().then(() => {
+                musicPlaying = true;
+                banner.innerHTML = "🎧 Chill Vibe Playing...";
+            }).catch(error => {
+                console.log("Autoplay blocked");
+            });
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const banner = document.querySelector('.music-banner');
+            if (!musicPlaying) {
+                music.play();
+                musicPlaying = true;
+                banner.innerHTML = "🎧 Chill Vibe Playing...";
+            } else {
+                music.pause();
+                musicPlaying = false;
+                banner.innerHTML = "🎧 Tap for Chill Vibe";
+            }
+        }
+
+        function goToSlide(slideNumber) {
+            if(!musicPlaying) {
+                playMusic();
+            }
+
+            for (let i = 1; i <= 9; i++) {
+                document.getElementById('slide-' + i).classList.add('hidden');
+            }
+            document.getElementById('slide-' + slideNumber).classList.remove('hidden');
+        }
+
+        function moveButton() {
+            const btn = document.getElementById('no-btn');
+            const maxX = window.innerWidth - btn.offsetWidth - 60;
+            const maxY = window.innerHeight - btn.offsetHeight - 60;
+            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+            
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        }
+
+        function tiltCard(e) {
+            const card = document.getElementById('card-container');
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        }
+    </script>
+
+</body>
+</html>
